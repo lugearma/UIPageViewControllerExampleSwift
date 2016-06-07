@@ -22,7 +22,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         self.pageViewController?.dataSource = self
         
         //Create a variable for first element that will be show
-        let startingViewController = self.viewControllerAtIndex(1)
+        let startingViewController = self.viewControllerAtIndex(0)
         let viewControllers: [UIViewController]? = [startingViewController]
         self.pageViewController?.setViewControllers(viewControllers, direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
 
