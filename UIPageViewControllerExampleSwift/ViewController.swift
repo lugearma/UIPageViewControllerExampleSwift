@@ -54,12 +54,28 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     //MARK: Page View Controller Data Source Methods
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        <#code#>
+        let viewController = viewController as? PageContentViewController
+        var index = viewController?.pageIndex
+        
+        if index == 0 || index == NSNotFound{
+            return nil
+        }
+        
+        index! += 1
+        return self.viewControllerAtIndex(index!)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        <#code#>
+        
+        let viewController = viewController as? PageContentViewController
+        var index = viewController?.pageIndex
+        
+        if index == 0 || index == NSNotFound{
+            return nil
+        }
+        
+        index! -= 1
+        return self.viewControllerAtIndex(index!)
     }
-
 
 }

@@ -11,7 +11,7 @@ import UIKit
 class PageContentViewController: UIViewController {
     
     @IBOutlet weak var labelTitle: UILabel!
-    var pageIndex: NSInteger?
+    var pageIndex: Int?
     var pageTitle: String?
     
     override func viewDidLoad() {
