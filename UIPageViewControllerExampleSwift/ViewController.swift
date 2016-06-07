@@ -39,9 +39,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     func viewControllerAtIndex(index: Int) -> PageContentViewController! {
-        
-//        let i = Int(index)
-        
+
         if self.pageTitles.count == 0 || index >= self.pageTitles.count{
             return nil
         }
@@ -61,11 +59,16 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         let viewController = viewController as? PageContentViewController
         var index = Int((viewController?.pageIndex)!)
         
-        if index == 0 || index == NSNotFound{
+        if index == NSNotFound{
             return nil
         }
         
         index += 1
+        
+        if (index == self.pageTitles.count){
+            return nil
+        }
+        
         return self.viewControllerAtIndex(index)
     }
     
