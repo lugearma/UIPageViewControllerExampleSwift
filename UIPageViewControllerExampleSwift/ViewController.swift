@@ -23,11 +23,14 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         
         //Create a variable for first element that will be show
         let startingViewController = self.viewControllerAtIndex(0)
-        var viewControllers = [startingViewController]
+        let viewControllers = [startingViewController]
         self.pageViewController?.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
 
         //Change the size of page view controller
-        
+        self.pageViewController?.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        self.addChildViewController(pageViewController!)
+        self.view.addSubview((pageViewController?.view)!)
+        self.pageViewController?.didMoveToParentViewController(self)
     }
 
     override func didReceiveMemoryWarning() {
