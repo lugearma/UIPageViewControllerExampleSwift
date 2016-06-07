@@ -23,7 +23,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         
         //Create a variable for first element that will be show
         let startingViewController = self.viewControllerAtIndex(0)
-        let viewControllers = [startingViewController]
+        let viewControllers: [UIViewController]? = [startingViewController]
         self.pageViewController?.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
 
         //Change the size of page view controller
@@ -38,8 +38,17 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    func viewControllerAtIndex(index: Int) -> UIViewController {
-        return nil
+    func viewControllerAtIndex(index: Int) -> UIViewController! {
+        if self.pageTitles.count == 0 || index >= self.pageTitles.count{
+            return nil
+        }
+        
+        //Create new view controller
+        let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageContentViewController") as! PageContentViewController
+        pageContentViewController.pageTitle = self.pageTitles[index]
+        pageContentViewController.pageIndex = index
+        
+        return pageContentViewController
     }
     
     //MARK: Page View Controller Data Source Methods
