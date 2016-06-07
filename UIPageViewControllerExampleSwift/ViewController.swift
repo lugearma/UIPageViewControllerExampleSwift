@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UIPageViewControllerDataSource {
     
-    let pageTitles = ["Screen 1", "Screen 2", "Screen 3", "Screen 4"]
+    let pageTitles = ["1", "2", "3", "4"]
     var pageViewController: UIPageViewController?
     
 
@@ -22,9 +22,9 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         self.pageViewController?.dataSource = self
         
         //Create a variable for first element that will be show
-        let startingViewController = self.viewControllerAtIndex(0)
+        let startingViewController = self.viewControllerAtIndex(1)
         let viewControllers: [UIViewController]? = [startingViewController]
-        self.pageViewController?.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
+        self.pageViewController?.setViewControllers(viewControllers, direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
 
         //Change the size of page view controller
         self.pageViewController?.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
@@ -38,7 +38,10 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    func viewControllerAtIndex(index: Int) -> UIViewController! {
+    func viewControllerAtIndex(index: Int) -> PageContentViewController! {
+        
+//        let i = Int(index)
+        
         if self.pageTitles.count == 0 || index >= self.pageTitles.count{
             return nil
         }
@@ -46,7 +49,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
         //Create new view controller
         let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageContentViewController") as! PageContentViewController
         pageContentViewController.pageTitle = self.pageTitles[index]
-        pageContentViewController.pageIndex = index
+        pageContentViewController.pageIndex = UInt(index)
         
         return pageContentViewController
     }
@@ -54,28 +57,37 @@ class ViewController: UIViewController, UIPageViewControllerDataSource {
     //MARK: Page View Controller Data Source Methods
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        
         let viewController = viewController as? PageContentViewController
-        var index = viewController?.pageIndex
+        var index = Int((viewController?.pageIndex)!)
         
         if index == 0 || index == NSNotFound{
             return nil
         }
         
-        index! += 1
-        return self.viewControllerAtIndex(index!)
+        index += 1
+        return self.viewControllerAtIndex(index)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         
         let viewController = viewController as? PageContentViewController
-        var index = viewController?.pageIndex
+        var index = Int((viewController?.pageIndex)!)
         
         if index == 0 || index == NSNotFound{
             return nil
         }
         
-        index! -= 1
-        return self.viewControllerAtIndex(index!)
+        index -= 1
+        return self.viewControllerAtIndex(index)
+    }
+    
+    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return self.pageTitles.count
+    }
+    
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return 0
     }
 
 }
